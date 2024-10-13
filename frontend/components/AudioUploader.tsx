@@ -10,6 +10,7 @@ const AudioUploader: React.FC = () => {
   const [recording, setRecording] = useState<boolean>(false);
   const [recorder, setRecorder] = useState<Recorder | null>(null);
   const [audioContext, setAudioContext] = useState<AudioContext | null>(null);
+  const [mediaStream, setMediaStream] = useState<MediaStream | null>(null);
 
   useEffect(() => {
     // Initialize WebSocket connection
@@ -34,11 +35,12 @@ const AudioUploader: React.FC = () => {
 
   const startRecording = async (): Promise<void> => {
     try {
-      const audioContext = new (window.AudioContext ||
-        window.webkitAudioContext)();
+      const audioContext = new (window.AudioContext || window.AudioContext)();
       setAudioContext(audioContext);
 
       const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+      setMediaStream(stream); // Save the media stream in state
+
       const recorder = new Recorder(audioContext);
       await recorder.init(stream);
       recorder.start();
@@ -58,8 +60,13 @@ const AudioUploader: React.FC = () => {
         // Send the WAV blob to the server
         sendAudioToServer(blob);
 
+        // Stop the media stream to release the microphone
+        if (mediaStream) {
+          mediaStream.getTracks().forEach((track) => track.stop());
+          setMediaStream(null); // Clear the media stream from state
+        }
+
         // Clean up
-        recorder.destroy(); // Properly release resources held by the recorder
         audioContext.close();
         setRecorder(null);
         setAudioContext(null);
