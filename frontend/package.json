@@ -18,6 +18,7 @@
     "react-audio-visualize": "^1.2.0",
     "react-audio-voice-recorder": "^2.2.0",
     "react-dom": "^18",
+    "react-tilt": "^1.0.2",
     "react-type-animation": "^3.2.0",
     "react-voice-visualizer": "^2.0.4",
     "recorder-js": "^1.0.7",

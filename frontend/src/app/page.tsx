@@ -11,9 +11,9 @@ const Home: React.FC = () => {
     return (
         <div className="flex flex-col min-h-screen relative overflow-hidden">
             <Navbar />
-            <div className="absolute top-16 left-0 w-full h-full bg-white bg-opacity-80">
+            <div className="absolute top-20 left-0 w-full h-full bg-white bg-opacity-80">
                 <Spline
-                    scene="https://prod.spline.design/ic-JvH3AUDZiQkdx/scene.splinecode"
+                    scene="https://prod.spline.design/OY2hEj9n7p3Itn2n/scene.splinecode"
                     className="absolute inset-0 -z-10 transform scale-125" // Adjust scale to make it larger
                 />
             </div>
