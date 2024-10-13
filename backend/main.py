@@ -24,7 +24,7 @@ AUDIO_FOLDER = 'temp_audio'
 os.makedirs(AUDIO_FOLDER, exist_ok=True)
 
 @socketio.on("audio_data")
-def handle_audio_data():
+def handle_audio_data(data):
     try:
         print("Received audio data")
         print(f"Type of data received: {type(data)}")
@@ -90,8 +90,6 @@ def chat():
 
         response_ai.stream_to_file(speech_file_path)        
         
-        
-
         return jsonify({
             "response": assistant_reply,
         })
