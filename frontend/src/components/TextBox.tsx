@@ -14,7 +14,7 @@ const TextBox: React.FC<TextBoxProps> = ({ userText, aiText }) => {
         console.log("AI Text: ", aiText);
     }, [userText]);
 
-    const [playActive] = useSound(`/speech.mp3?v=${new Date().getTime()}`, {
+    const [playActive] = useSound(`/speech.mp3`, {
         volume: 1,
     });
 
@@ -24,10 +24,10 @@ const TextBox: React.FC<TextBoxProps> = ({ userText, aiText }) => {
         }, 5000); // 5000 milliseconds = 5 seconds
 
         return () => clearTimeout(timer);
-    }, [aiText, playActive]); // Include aiText in the dependency array
+    }, [aiText]); // Include aiText in the dependency array
 
     return (
-        <div className="border-2 w-5/6 border-grey rounded-xl p-4 shadow-xl mx-16 text-gray-800">
+        <div className="border-2 w-5/6 border-grey rounded-xl p-4 shadow-xl mx-24 text-gray-800">
             <div className="flex items-center ml-3 mt-3">
                 <Image src="/Logo.png" width={30} height={20} alt="logo" />
                 <div className="rounded-xl px-5 py-2 text-black">
