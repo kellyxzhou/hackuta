@@ -5,6 +5,7 @@ import { motion } from "framer-motion";
 import AudioUploader from "../../components/AudioUploader";
 import TextBox from "../../components/TextBox";
 import axios from "axios";
+import Spline from '@splinetool/react-spline';
 
 export default function page() {
     const [started, setStarted] = React.useState(false);
