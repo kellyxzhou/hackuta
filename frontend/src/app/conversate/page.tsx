@@ -1,5 +1,5 @@
 "use client";
-import React from "react";
+import React, { useRef } from "react";
 import Navbar from "../../components/navbar";
 import { motion } from "framer-motion";
 import AudioUploader from "../../components/AudioUploader";
