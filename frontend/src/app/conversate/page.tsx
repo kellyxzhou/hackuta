@@ -7,7 +7,7 @@ import TextBox from "../../components/TextBox";
 import axios from "axios";
 import Spline from "@splinetool/react-spline";
 
-export default function Page() {
+export default function page() {
   const [started, setStarted] = React.useState(false);
   const [transcriptionData, setTranscriptionData] = React.useState<string[]>(
     []
@@ -71,14 +71,13 @@ export default function Page() {
   };
 
   return (
-    <div className="relative">
+    <div>
       <Navbar />
 
       <div className="bg-white">
         <Spline
           scene="https://prod.spline.design/4sTGTBwP3L5HAKvK/scene.splinecode"
-          className="absolute inset-0 -z-10 transform scale-125 opacity-20"
-          // Adjust opacity value as needed
+          className="absolute inset-0 -z-10 transform scale-125 opacity-20" // Adjust opacity value as needed
         />
       </div>
       {started ? (
