@@ -12,7 +12,11 @@
     "@auth0/nextjs-auth0": "^3.5.0",
     "next": "14.2.15",
     "react": "^18",
-    "react-dom": "^18"
+    "react-audio-visualize": "^1.2.0",
+    "react-audio-voice-recorder": "^2.2.0",
+    "react-dom": "^18",
+    "react-voice-visualizer": "^2.0.4",
+    "wavesurfer.js": "^7.8.6"
   },
   "devDependencies": {
     "@types/node": "^20",
