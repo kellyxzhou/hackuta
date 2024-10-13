@@ -8,7 +8,7 @@ import subprocess
 import audioprocess
 from openai import OpenAI
 from pathlib import Path
-from audioprocess import generateTranscription
+from audioprocess import generateTranscription, phonemeDecomp, buildSynPhonemes
 import librosa
 
 load_dotenv()
@@ -23,12 +23,15 @@ openai_client = OpenAI()
 AUDIO_FOLDER = 'temp_audio'
 os.makedirs(AUDIO_FOLDER, exist_ok=True)
 
-@socketio.on('audio_data')
-def handle_audio_data(data):
+@app.route('/composite', methods=['POST'])
+def handle_audio_data():
     try:
         print("Received audio data")
         print(f"Type of data received: {type(data)}")
         print(f"Data size: {len(data)} bytes")
+        
+        with open("recieved_data.wav", "wb") as f:
+            f.write(data)
 
         phonemes = phonemeDecomp(data)
         transcript = generateTranscription(data)
@@ -103,8 +106,8 @@ def get_audio():
 def transcribe():
     audio_file= open("received_audio.wav", "rb")
     transcription = openai_client.audio.transcriptions.create(
-    model="whisper-1", 
-    file=audio_file
+        model="whisper-1", 
+        file=audio_file
     )
     print(transcription.text)
     return jsonify({"transcription": transcription.text})
