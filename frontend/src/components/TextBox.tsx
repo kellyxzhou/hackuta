@@ -2,6 +2,7 @@
 import React, { useState, useEffect } from "react";
 import Image from "next/image";
 import useSound from "use-sound";
+// import Spline from "@splinetool/react-spline";
 
 interface TextBoxProps {
   userText: { transcription: string }[];
@@ -29,7 +30,7 @@ const TextBox: React.FC<TextBoxProps> = ({ userText, aiText }) => {
   return (
     <div className="border-2 w-5/6 border-grey rounded-xl p-4 shadow-xl mx-24 text-gray-800">
       <div className="flex items-center ml-3 mt-3">
-        <Image src="/Logo.png" width={30} height={20} alt="logo" />
+        <Image src="/Logo.png" width={30} height={30} alt="logo" />
         <div className="rounded-xl px-5 py-2 text-black">
           {userText.length === 0
             ? "Waiting for you to say something..."

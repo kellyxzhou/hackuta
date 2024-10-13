@@ -5,6 +5,7 @@ import { Tilt } from "react-tilt";
 import { motion } from "framer-motion";
 import { useRouter } from "next/navigation";
 import { useUser } from "@propelauth/nextjs/client";
+import Spline from "@splinetool/react-spline";
 
 const defaultOptions = {
   reverse: false, // reverse the tilt direction
@@ -29,6 +30,21 @@ export default function page() {
   return (
     <div>
       <Navbar />
+      <div className="absolute top-0 w-full -z-30 h-1/2  scale-x-[-1]">
+        <Spline
+          scene="https://prod.spline.design/OY2hEj9n7p3Itn2n/scene.splinecode"
+          className="absolute inset-0  opacity-25 "
+        />
+      </div>
+
+      {/* Bottom Spline */}
+      <div className="absolute bottom-0 -z-30 w-full h-1/2">
+        <Spline
+          scene="https://prod.spline.design/OY2hEj9n7p3Itn2n/scene.splinecode"
+          className="absolute inset-0 scale-125 opacity-25"
+        />
+      </div>
+
       <h1 className="text-2xl font-bold py-2 px-4 mt-5 ml-16">
         Hi, {user?.firstName}!
       </h1>
@@ -43,7 +59,7 @@ export default function page() {
         >
           <Tilt
             options={defaultOptions}
-            className="bg-white p-24 rounded-2xl border-2 border-gray-300 shadow-2xl flex items-center justify-center text-2xl font-semibold"
+            className="bg-white p-24 rounded-2xl border-2 border-gray-300 shadow-2xl flex items-center justify-center text-2xl font-semibold cursor-pointer"
           >
             "sh"
           </Tilt>
@@ -55,7 +71,7 @@ export default function page() {
         >
           <Tilt
             options={defaultOptions}
-            className="bg-white p-24 rounded-2xl border-2 border-gray-300 shadow-2xl flex items-center justify-center text-2xl font-semibold"
+            className="bg-white p-24 rounded-2xl border-2 border-gray-300 shadow-2xl flex items-center justify-center text-2xl font-semibold cursor-pointer"
           >
             "fuh"
           </Tilt>
@@ -67,7 +83,7 @@ export default function page() {
         >
           <Tilt
             options={defaultOptions}
-            className="bg-white p-24 rounded-2xl border-2 border-gray-300 shadow-2xl flex items-center justify-center text-2xl font-semibold"
+            className="bg-white p-24 rounded-2xl border-2 border-gray-300 shadow-2xl flex items-center justify-center text-2xl font-semibold cursor-pointer"
           >
             "neh"
           </Tilt>
@@ -79,7 +95,7 @@ export default function page() {
         >
           <Tilt
             options={defaultOptions}
-            className="bg-white p-24 rounded-2xl border-2 border-gray-300 shadow-2xl flex items-center justify-center text-2xl font-semibold"
+            className="bg-white p-24 rounded-2xl border-2 border-gray-300 shadow-2xl flex items-center justify-center text-2xl font-semibold cursor-pointer"
           >
             "tuhk"
           </Tilt>
@@ -91,7 +107,7 @@ export default function page() {
         >
           <Tilt
             options={defaultOptions}
-            className="bg-white p-24 rounded-2xl border-2 border-gray-300 shadow-2xl flex items-center justify-center text-2xl font-semibold"
+            className="bg-white p-24 rounded-2xl border-2 border-gray-300 shadow-2xl flex items-center justify-center text-2xl font-semibold cursor-pointer"
           >
             "luh"
           </Tilt>
@@ -103,7 +119,7 @@ export default function page() {
         >
           <Tilt
             options={defaultOptions}
-            className="bg-white p-24 rounded-2xl border-2 border-gray-300 shadow-2xl flex items-center justify-center text-2xl font-semibold"
+            className="bg-white p-24 rounded-2xl border-2 border-gray-300 shadow-2xl flex items-center justify-center text-2xl font-semibold cursor-pointer"
           >
             "kay"
           </Tilt>
@@ -115,7 +131,7 @@ export default function page() {
         >
           <Tilt
             options={defaultOptions}
-            className="bg-white p-24 rounded-2xl border-2 border-gray-300 shadow-2xl flex items-center justify-center text-2xl font-semibold"
+            className="bg-white p-24 rounded-2xl border-2 border-gray-300 shadow-2xl flex items-center justify-center text-2xl font-semibold cursor-pointer"
           >
             "neh"
           </Tilt>
@@ -127,7 +143,7 @@ export default function page() {
         >
           <Tilt
             options={defaultOptions}
-            className="bg-white p-24 rounded-2xl border-2 border-gray-300 shadow-2xl flex items-center justify-center text-2xl font-semibold"
+            className="bg-white p-24 rounded-2xl border-2 border-gray-300 shadow-2xl flex items-center justify-center text-2xl font-semibold cursor-pointer"
           >
             "tuhk"
           </Tilt>
@@ -139,7 +155,7 @@ export default function page() {
         >
           <Tilt
             options={defaultOptions}
-            className="bg-white p-24 rounded-2xl border-2 border-gray-300 shadow-2xl flex items-center justify-center text-2xl font-semibold"
+            className="bg-white p-24 rounded-2xl border-2 border-gray-300 shadow-2xl flex items-center justify-center text-2xl font-semibold cursor-pointer"
           >
             "luh"
           </Tilt>
@@ -151,7 +167,7 @@ export default function page() {
         >
           <Tilt
             options={defaultOptions}
-            className="bg-white p-24 rounded-2xl border-2 border-gray-300 shadow-2xl flex items-center justify-center text-2xl font-semibold"
+            className="bg-white p-24 rounded-2xl border-2 border-gray-300 shadow-2xl flex items-center justify-center text-2xl font-semibold cursor-pointer"
           >
             "kay"
           </Tilt>
