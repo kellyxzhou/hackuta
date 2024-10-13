@@ -17,7 +17,7 @@ const Navbar: React.FC = () => {
           onClick={() => router.push("/")}
         >
           <img src="/Logo.png" alt="PronounFix" className="w-6 h-10" />
-          <h1 className="text-xl text-primary font-bold">Fluently</h1>
+          <h1 className="text-2xl text-primary font-bold">Fluently</h1>
         </motion.div>
         <div className="flex gap-12 items-center">
           <motion.div
