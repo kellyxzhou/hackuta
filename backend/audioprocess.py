@@ -21,6 +21,7 @@ processor = AutoProcessor.from_pretrained(phonemeCheckpoint)
 OpenAI.api_key = os.environ.get("OPENAI_API_KEY")
 client = OpenAI(api_key=os.environ.get("OPENAI_API_KEY"))
 
+
 def decode_phonemes(
     ids: torch.Tensor, processor: Wav2Vec2Processor, ignore_stress: bool = False
 ) -> str:
@@ -32,7 +33,8 @@ def decode_phonemes(
         processor.tokenizer.word_delimiter_token_id
     ]
     # converts id to token, skipping special tokens
-    phonemes = [processor.decode(id_) for id_ in ids if id_ not in special_token_ids]
+    phonemes = [processor.decode(id_)
+                for id_ in ids if id_ not in special_token_ids]
 
     # joins phonemes
     prediction = " ".join(phonemes)
@@ -43,10 +45,12 @@ def decode_phonemes(
 
     return prediction
 
+
 def generateTranscription(data):
     trans = speechToTextModel.transcribe(data)
     print("Generated transcription: " + str(trans["text"]), file=sys.stderr)
     return [word for word in trans["text"].split(' ') if word != '']
+
 
 def phonemeDecomp(data):
     inputs = processor(data, return_tensors="pt", padding=True)
@@ -56,7 +60,8 @@ def phonemeDecomp(data):
     phonemes = decode_phonemes(predicted_ids[0], processor, ignore_stress=True)
     return phonemes
 
-def buildSynPhonemes(transcript, intermediatePath = "tmp.wav"):
+
+def buildSynPhonemes(transcript, intermediatePath="tmp.wav"):
     phonemeList = []
     for word in transcript:
         print("Processing " + word)
@@ -71,6 +76,7 @@ def buildSynPhonemes(transcript, intermediatePath = "tmp.wav"):
         phonemeList.append(synPhonemes)
     print(phonemeList)
     return phonemeList
+
 
 if __name__ == "__main__":
     data, _ = librosa.load("testdemo.wav", sr=22050)
