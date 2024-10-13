@@ -1,12 +1,20 @@
 "use client";
+<<<<<<< HEAD
 import React, { useEffect, useRef } from "react";
+=======
+import React from "react";
+>>>>>>> 7ecdd3eef805dbfc3a6faf612b5a042f1733ee53
 import Navbar from "../../components/navbar";
 import { motion } from "framer-motion";
 import AudioUploader from "../../components/AudioUploader";
 import TextBox from "../../components/TextBox";
+<<<<<<< HEAD
 import axios from "axios";
+=======
+import Spline from '@splinetool/react-spline';
+>>>>>>> 7ecdd3eef805dbfc3a6faf612b5a042f1733ee53
 
-export default function page() {
+export default function Page() {
     const [started, setStarted] = React.useState(false);
     const [transcriptionData, setTranscriptionData] = React.useState<string[]>(
         []
@@ -71,11 +79,17 @@ export default function page() {
     };
 
     return (
-        <div>
+        <div className="relative">
             <Navbar />
 
+            {/* <div className="bg-white">
+                <Spline
+                    scene="https://prod.spline.design/4sTGTBwP3L5HAKvK/scene.splinecode"
+                    className="absolute inset-0 -z-10 transform scale-125 opacity-20" // Adjust opacity value as needed
+                />
+            </div> */}
             {started ? (
-                <div className="flex flex-col items-center justify-start min-h-screen pt-10">
+                <div className="flex flex-col items-center justify-start min-h-screen pt-10 relative z-10">
                     <h2 className="text-2xl font-bold mb-4">
                         Let's talk about{" "}
                         <span className="text-primary text-2xl">
@@ -83,6 +97,7 @@ export default function page() {
                         </span>{" "}
                         today
                     </h2>
+<<<<<<< HEAD
                     <div className="h-[440px] w-full overflow-y-auto rounded-md border p-4 scrollbar-thin scrollbar-thumb-gray-300 scrollbar-track-gray-100">
                         <TextBox
                             userText={transcriptionData}
@@ -90,6 +105,10 @@ export default function page() {
                         />
                     </div>
                     <div className="absolute bottom-10 left-1/2 transform -translate-x-1/2">
+=======
+                    <TextBox />
+                    <div className="absolute bottom-24 left-1/2 transform -translate-x-1/2"> {/* Adjusted bottom value here */}
+>>>>>>> 7ecdd3eef805dbfc3a6faf612b5a042f1733ee53
                         <div className="flex justify-center w-full mt-5">
                             <AudioUploader
                                 sendTranscriptionData={handleTranscriptionData}
@@ -101,27 +120,25 @@ export default function page() {
                     </div>
                 </div>
             ) : (
-                <>
-                    <div className="flex flex-col items-center justify-center min-h-screen -mt-10">
-                        <h1 className="text-4xl font-bold py-2 px-4 rounded-full mt-5 text-center">
-                            Improve Your Pronunciation
-                        </h1>
-                        <p className="mt-2 text-center">
-                            Our app analyzes your speech and provides
-                            personalized feedback to help you pronounce words
-                            correctly.
-                        </p>
+                <div className="flex flex-col items-center justify-center min-h-screen -mt-10 relative z-10">
+                    <h1 className="text-4xl font-bold py-2 px-4 rounded-full mt-5 text-center">
+                        Improve Your Pronunciation
+                    </h1>
+                    <p className="mt-2 text-center">
+                        Our app analyzes your speech and provides
+                        personalized feedback to help you pronounce words
+                        correctly.
+                    </p>
 
-                        <motion.button
-                            whileHover={{ scale: 1.1 }}
-                            whileTap={{ scale: 0.9 }}
-                            onClick={() => setStarted(true)}
-                            className="hover:bg-primary hover:text-white underline decoration-primary decoration-4 underline-offset-4 text-2xl font-bold py-2 px-5 rounded-full mt-8 mx-auto text-center"
-                        >
-                            Start Conversation
-                        </motion.button>
-                    </div>
-                </>
+                    <motion.button
+                        whileHover={{ scale: 1.1 }}
+                        whileTap={{ scale: 0.9 }}
+                        onClick={() => setStarted(true)}
+                        className="hover:bg-primary hover:text-white underline decoration-primary decoration-4 underline-offset-4 text-2xl font-bold py-2 px-5 rounded-full mt-8 mx-auto text-center"
+                    >
+                        Start Conversation
+                    </motion.button>
+                </div>
             )}
         </div>
     );
