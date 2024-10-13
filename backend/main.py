@@ -33,17 +33,18 @@ def handle_audio_data(data):
         with open("recieved_data.wav", "wb") as f:
             f.write(data)
 
-        phonemes = phonemeDecomp(data)
-        transcript = generateTranscription(data)
-        synPhonemes = buildSynPhonemes(transcript)
+        with open("recieved_data.wav", "rb") as data:
+            phonemes = phonemeDecomp(data)
+            transcript = generateTranscription(data)
+            synPhonemes = buildSynPhonemes(transcript)
 
-        resBody = {
-            "phonemes": phonemes,
-            "transcript": transcript,
-            "synPhonemes": synPhonemes
-        }
-        
-        emit("response", {"message": resBody})
+            resBody = {
+                "phonemes": phonemes,
+                "transcript": transcript,
+                "synPhonemes": synPhonemes
+            }
+            
+            emit("response", {"message": resBody})
     except Exception as e:
         print(f"Error: {e}")
         emit("error", {"message": str(e)})
