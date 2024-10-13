@@ -52,7 +52,7 @@ export default function page() {
             ) : (
                 <>
                     <div className="flex flex-col items-center justify-center min-h-screen -mt-10">
-                        <h1 className="text-2xl font-bold py-2 px-4 rounded-full mt-5 text-center">
+                        <h1 className="text-4xl font-bold py-2 px-4 rounded-full mt-5 text-center">
                             Improve Your Pronunciation
                         </h1>
                         <p className="mt-2 text-center">
