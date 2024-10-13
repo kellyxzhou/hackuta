@@ -1,6 +1,6 @@
 "use client";
 import React from "react";
-import Navbar from "./components/navbar";
+import Navbar from "../components/navbar";
 import { TypeAnimation } from "react-type-animation";
 import { motion } from "framer-motion";
 import { useRouter } from "next/navigation";

@@ -15,6 +15,7 @@ CORS(app)
 
 client = MongoClient(os.getenv("MONGODB_URI"))
 
+
 @socketio.on('audio_data')
 def handle_audio_data(data):
     try:
@@ -23,7 +24,7 @@ def handle_audio_data(data):
         print(f"Data size: {len(data)} bytes")
 
         # Decompose and spech-to-text input audio
-        #with open("received_audio.wav", "wb") as f:
+        # with open("received_audio.wav", "wb") as f:
         #    f.write(data)
         transcription = audioprocess.generateTranscription(data)["text"]
         phenomes = audioprocess.phonemeDecomp(data)
@@ -33,6 +34,7 @@ def handle_audio_data(data):
         print(f"Error: {e}")
         emit("error", {"message": str(e)})
 
+
 @app.route("/")
 def hello():
     try:
@@ -40,6 +42,7 @@ def hello():
         return jsonify({"message": "Connected to MongoDB", "databases": databases})
     except Exception as e:
         return jsonify({"error": str(e)}), 500
+
 
 if __name__ == '__main__':
     socketio.run(app, debug=True, host="0.0.0.0", port=5001)
