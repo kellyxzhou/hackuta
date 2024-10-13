@@ -8,6 +8,8 @@ import subprocess
 import audioprocess
 from openai import OpenAI
 from pathlib import Path
+from audioprocess import generateTranscription
+import librosa
 
 load_dotenv()
 
@@ -28,13 +30,14 @@ def handle_audio_data(data):
         print(f"Type of data received: {type(data)}")
         print(f"Data size: {len(data)} bytes")
 
-        # Decompose and spech-to-text input audio
-        # with open("received_audio.wav", "wb") as f:
-        #    f.write(data)
-        transcription = audioprocess.generateTranscription(data)["text"]
-        phenomes = audioprocess.phonemeDecomp(data)
+        #Decompose and spech-to-text input audio
+        with open("received_audio.wav", "wb") as f:
+           f.write(data)
+        # transcription = audioprocess.generateTranscription(data)["text"]
+        # phenomes = audioprocess.phonemeDecomp(data)
 
-        emit("response", {"message": transcription + str(phenomes)})
+        #emit("response", {"message": transcription + str(phenomes)})
+        emit("response", {"message": "Audio received successfully"})
     except Exception as e:
         print(f"Error: {e}")
         emit("error", {"message": str(e)})
@@ -92,6 +95,18 @@ def chat():
 @app.route('/response.mp3', methods=['GET'])
 def get_audio():
     return app.send_static_file('response.mp3')
+
+@app.route('/transcribe', methods=['GET'])
+def transcribe():
+    audio_file= open("received_audio.wav", "rb")
+    transcription = openai_client.audio.transcriptions.create(
+    model="whisper-1", 
+    file=audio_file
+    )
+    print(transcription.text)
+    return jsonify({"transcription": transcription.text})
+    
+        
 
 if __name__ == '__main__':
     app.static_folder = os.getcwd()
