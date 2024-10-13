@@ -30,17 +30,14 @@ def handle_audio_data(data):
         print(f"Type of data received: {type(data)}")
         print(f"Data size: {len(data)} bytes")
 
-        phonemes = phonemeDecomp(data)
-        transcript = generateTranscription(data)
-        synPhonemes = buildSynPhonemes(transcript)
+        #Decompose and spech-to-text input audio
+        with open("received_audio.wav", "wb") as f:
+           f.write(data)
+        # transcription = audioprocess.generateTranscription(data)["text"]
+        # phenomes = audioprocess.phonemeDecomp(data)
 
-        resBody = {
-            "phonemes": phonemes,
-            "transcript": transcript,
-            "synPhonemes": synPhonemes
-        }
-        
-        emit("response", {"message": resBody})
+        #emit("response", {"message": transcription + str(phenomes)})
+        emit("response", {"message": "Audio received successfully"})
     except Exception as e:
         print(f"Error: {e}")
         emit("error", {"message": str(e)})
@@ -59,7 +56,8 @@ def chat():
     try:
         
         data = request.get_json()
-        user_input = data.get('text', '')
+        user_input1 = data.get('text', '')
+        user_input = user_input1.get('transcription', '')
         if not user_input:
             return jsonify({"error": "No input provided"}), 400
 
@@ -76,7 +74,7 @@ def chat():
         
         assistant_reply = response.choices[0].message.content
 
-        speech_file_path = Path(__file__).parent / "speech.mp3"
+        speech_file_path = Path(__file__).parent.parent / "frontend" / "public" / "speech.mp3"
         response_ai = openai_client.audio.speech.create(
             model="tts-1",
             voice="nova",
@@ -89,7 +87,6 @@ def chat():
 
         return jsonify({
             "response": assistant_reply,
-            "audio": "http://localhost:5001/response.wav"
         })
 
     except Exception as e:
