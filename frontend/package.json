@@ -12,20 +12,28 @@
     "@auth0/nextjs-auth0": "^3.5.0",
     "next": "14.2.15",
     "react": "^18",
+<<<<<<< HEAD
     "react-audio-visualize": "^1.2.0",
     "react-audio-voice-recorder": "^2.2.0",
     "react-dom": "^18",
     "react-voice-visualizer": "^2.0.4",
     "wavesurfer.js": "^7.8.6"
+=======
+    "react-dom": "^18",
+    "recorder-js": "^1.0.7",
+    "socket.io-client": "^4.8.0"
+>>>>>>> ae6a0f0d6f7330c58fd10c000b07b66d1f81e36c
   },
   "devDependencies": {
-    "@types/node": "^20",
+    "@types/node": "20.16.11",
     "@types/react": "^18",
     "@types/react-dom": "^18",
     "eslint": "^8",
     "eslint-config-next": "14.2.15",
+    "eslint": "^8",
+    "eslint-config-next": "14.2.15",
     "postcss": "^8",
     "tailwindcss": "^3.4.1",
-    "typescript": "^5"
+    "typescript": "5.6.3"
   }
 }
