@@ -23,14 +23,14 @@ export default function page() {
 
     useEffect(() => {
         console.log("User", user);
-    }, []);
+    }, [user]);
 
     const router = useRouter();
     return (
         <div>
             <Navbar />
             <h1 className="text-2xl font-bold py-2 px-4 mt-5 ml-16">
-                Hi, "User"!
+                Hi, {user?.firstName}!
             </h1>
             <h1 className="text-2xl px-4 ml-16 mt-1 mb-6">
                 Here are some targeted exercises for you:

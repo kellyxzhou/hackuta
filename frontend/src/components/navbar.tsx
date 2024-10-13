@@ -3,9 +3,11 @@
 import { useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { motion } from "framer-motion";
+import { useUser } from "@propelauth/nextjs/client";
 
 const Navbar: React.FC = () => {
     const router = useRouter();
+    const { user } = useUser();
 
     return (
         <div className="bg-white shadow-lg text-black p-4">
@@ -28,7 +30,7 @@ const Navbar: React.FC = () => {
                         whileHover={{ scale: 1.05 }}
                         whileTap={{ scale: 0.9 }}
                         onClick={() => router.push("/conversate")}
-                        className="hover:border-primary hover:border-2 rounded-2xl py-2 font-bold px-5 hover:text-primary cursor-pointer"
+                        className="hover:border-primary hover:border-2 rounded-2xl py-1 font-bold px-5 hover:text-primary cursor-pointer"
                     >
                         Conversate
                     </motion.div>
@@ -36,20 +38,38 @@ const Navbar: React.FC = () => {
                         whileHover={{ scale: 1.05 }}
                         whileTap={{ scale: 0.9 }}
                         onClick={() => router.push("/training")}
-                        className="hover:border-primary hover:border-2 rounded-2xl py-2 font-bold px-5 hover:text-primary cursor-pointer"
+                        className="hover:border-primary hover:border-2 rounded-2xl py-1 font-bold px-5 hover:text-primary cursor-pointer"
                     >
                         Training
                     </motion.div>
-                    <motion.div
-                        whileHover={{ scale: 1.05 }}
-                        whileTap={{ scale: 0.9 }}
-                        onClick={() =>
-                            router.push("https://9241944581.propelauthtest.com")
-                        }
-                        className="hover:border-primary hover:border-2 rounded-2xl py-2 font-bold px-5 hover:text-primary cursor-pointer"
-                    >
-                        Login
-                    </motion.div>
+
+                    {user ? (
+                        <motion.div
+                            whileHover={{ scale: 1.05 }}
+                            whileTap={{ scale: 0.9 }}
+                            onClick={() =>
+                                router.push(
+                                    "https://9241944581.propelauthtest.com/account"
+                                )
+                            }
+                            className="hover:border-primary hover:border-2 rounded-2xl py-1 font-bold px-5 hover:text-primary cursor-pointer"
+                        >
+                            Profile
+                        </motion.div>
+                    ) : (
+                        <motion.div
+                            whileHover={{ scale: 1.05 }}
+                            whileTap={{ scale: 0.9 }}
+                            onClick={() =>
+                                router.push(
+                                    "https://9241944581.propelauthtest.com"
+                                )
+                            }
+                            className="hover:border-primary hover:border-2 rounded-2xl py-1 font-bold px-5 hover:text-primary cursor-pointer"
+                        >
+                            Login
+                        </motion.div>
+                    )}
                 </div>
             </div>
         </div>
