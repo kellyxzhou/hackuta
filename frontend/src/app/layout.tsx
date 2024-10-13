@@ -2,9 +2,7 @@ import type { Metadata } from "next";
 import { Jua } from "next/font/google";
 import { Poppins } from "next/font/google";
 import "./globals.css";
-import { UserProvider } from "@auth0/nextjs-auth0/client";
-
-// app/layout.jsx
+import { AuthProvider } from "@propelauth/nextjs/client";
 
 const poppins = Poppins({
   subsets: ["latin"],
@@ -35,11 +33,13 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  return (
-    <html lang="en">
-      <body className={`${poppins.className}  antialiased`}>
-        <UserProvider>{children}</UserProvider>
-      </body>
-    </html>
-  );
+    return (
+        <html lang="en">
+            <AuthProvider authUrl={process.env.NEXT_PUBLIC_AUTH_URL}>
+                <body className={`${poppins.className}  antialiased`}>
+                    {children}
+                </body>
+            </AuthProvider>
+        </html>
+    );
 }
