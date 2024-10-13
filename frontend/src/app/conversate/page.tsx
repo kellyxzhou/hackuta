@@ -1,18 +1,11 @@
 "use client";
-<<<<<<< HEAD
 import React, { useEffect, useRef } from "react";
-=======
-import React from "react";
->>>>>>> 7ecdd3eef805dbfc3a6faf612b5a042f1733ee53
 import Navbar from "../../components/navbar";
 import { motion } from "framer-motion";
 import AudioUploader from "../../components/AudioUploader";
 import TextBox from "../../components/TextBox";
-<<<<<<< HEAD
 import axios from "axios";
-=======
 import Spline from '@splinetool/react-spline';
->>>>>>> 7ecdd3eef805dbfc3a6faf612b5a042f1733ee53
 
 export default function Page() {
     const [started, setStarted] = React.useState(false);
@@ -97,7 +90,6 @@ export default function Page() {
                         </span>{" "}
                         today
                     </h2>
-<<<<<<< HEAD
                     <div className="h-[440px] w-full overflow-y-auto rounded-md border p-4 scrollbar-thin scrollbar-thumb-gray-300 scrollbar-track-gray-100">
                         <TextBox
                             userText={transcriptionData}
@@ -105,10 +97,6 @@ export default function Page() {
                         />
                     </div>
                     <div className="absolute bottom-10 left-1/2 transform -translate-x-1/2">
-=======
-                    <TextBox />
-                    <div className="absolute bottom-24 left-1/2 transform -translate-x-1/2"> {/* Adjusted bottom value here */}
->>>>>>> 7ecdd3eef805dbfc3a6faf612b5a042f1733ee53
                         <div className="flex justify-center w-full mt-5">
                             <AudioUploader
                                 sendTranscriptionData={handleTranscriptionData}
