@@ -1,18 +1,13 @@
 "use client";
 
-import { useUser } from "@auth0/nextjs-auth0/client";
 import { useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { motion } from "framer-motion";
+import { useUser } from "@propelauth/nextjs/client";
 
 const Navbar: React.FC = () => {
     const router = useRouter();
-
-    const { user, error, isLoading } = useUser();
-
-    useEffect(() => {
-        console.log("User", user);
-    }, []);
+    const { user } = useUser();
 
     return (
         <div className="bg-white shadow-lg text-black p-4">
@@ -28,16 +23,14 @@ const Navbar: React.FC = () => {
                         alt="PronounFix"
                         className="w-6 h-10"
                     />
-                    <h1 className="text-xl text-primary font-bold">
-                        Fluently
-                    </h1>
+                    <h1 className="text-xl text-primary font-bold">Fluently</h1>
                 </motion.div>
                 <div className="flex gap-12 items-center">
                     <motion.div
                         whileHover={{ scale: 1.05 }}
                         whileTap={{ scale: 0.9 }}
                         onClick={() => router.push("/conversate")}
-                        className="hover:border-primary hover:border-2 rounded-2xl py-2 font-bold px-5 hover:text-primary cursor-pointer"
+                        className="hover:border-primary hover:border-2 rounded-2xl py-1 font-bold px-5 hover:text-primary cursor-pointer"
                     >
                         Conversate
                     </motion.div>
@@ -45,18 +38,38 @@ const Navbar: React.FC = () => {
                         whileHover={{ scale: 1.05 }}
                         whileTap={{ scale: 0.9 }}
                         onClick={() => router.push("/training")}
-                        className="hover:border-primary hover:border-2 rounded-2xl py-2 font-bold px-5 hover:text-primary cursor-pointer"
+                        className="hover:border-primary hover:border-2 rounded-2xl py-1 font-bold px-5 hover:text-primary cursor-pointer"
                     >
                         Training
                     </motion.div>
-                    <motion.div
-                        whileHover={{ scale: 1.05 }}
-                        whileTap={{ scale: 0.9 }}
-                        onClick={() => router.push("/")}
-                        className="hover:border-primary hover:border-2 rounded-2xl py-2 font-bold px-5 hover:text-primary cursor-pointer"
-                    >
-                        Login
-                    </motion.div>
+
+                    {user ? (
+                        <motion.div
+                            whileHover={{ scale: 1.05 }}
+                            whileTap={{ scale: 0.9 }}
+                            onClick={() =>
+                                router.push(
+                                    "https://9241944581.propelauthtest.com/account"
+                                )
+                            }
+                            className="hover:border-primary hover:border-2 rounded-2xl py-1 font-bold px-5 hover:text-primary cursor-pointer"
+                        >
+                            Profile
+                        </motion.div>
+                    ) : (
+                        <motion.div
+                            whileHover={{ scale: 1.05 }}
+                            whileTap={{ scale: 0.9 }}
+                            onClick={() =>
+                                router.push(
+                                    "https://9241944581.propelauthtest.com"
+                                )
+                            }
+                            className="hover:border-primary hover:border-2 rounded-2xl py-1 font-bold px-5 hover:text-primary cursor-pointer"
+                        >
+                            Login
+                        </motion.div>
+                    )}
                 </div>
             </div>
         </div>

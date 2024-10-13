@@ -65,7 +65,7 @@ export default function page() {
                             whileHover={{ scale: 1.1 }}
                             whileTap={{ scale: 0.9 }}
                             onClick={() => setStarted(true)}
-                            className="hover:bg-primary hover:text-white text-2xl font-bold py-2 px-5 rounded-full mt-8 mx-auto text-center"
+                            className="hover:bg-primary hover:text-white underline decoration-primary decoration-4 underline-offset-4 text-2xl font-bold py-2 px-5 rounded-full mt-8 mx-auto text-center"
                         >
                             Start Conversation
                         </motion.button>
