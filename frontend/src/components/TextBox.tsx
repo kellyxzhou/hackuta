@@ -14,9 +14,9 @@ const TextBox: React.FC<TextBoxProps> = ({ userText, aiText }) => {
     console.log("AI Text: ", aiText);
   }, [userText]);
 
-  const [playActive] = useSound(`/speech.mp3?v=${new Date().getTime()}`, {
-    volume: 1,
-  });
+  //   const [playActive] = useSound(`/speech.mp3?v=${new Date().getTime()}`, {
+  //     volume: 1,
+  //   });
 
   // useEffect(() => {
   //     const timer = setTimeout(() => {
