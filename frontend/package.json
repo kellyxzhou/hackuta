@@ -16,9 +16,9 @@
     "react-audio-voice-recorder": "^2.2.0",
     "react-dom": "^18",
     "react-voice-visualizer": "^2.0.4",
-    "wavesurfer.js": "^7.8.6",
     "recorder-js": "^1.0.7",
-    "socket.io-client": "^4.8.0"
+    "socket.io-client": "^4.8.0",
+    "wavesurfer.js": "^7.8.6"
   },
   "devDependencies": {
     "@types/node": "20.16.11",
