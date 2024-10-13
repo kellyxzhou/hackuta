@@ -7,19 +7,6 @@ const Navbar: React.FC = () => {
   const router = useRouter();
   const { user } = useUser();
 
-  useEffect(() => {
-    if (user) {
-      // Call the API to add the user to MongoDB
-      fetch("/api/addUser", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ userId: user.userId, email: user.email }),
-      }).catch((err) => console.error("Error adding user:", err));
-    }
-  }, [user]);
-
   return (
     <div className="bg-white shadow-lg text-black p-4">
       <div className="container mx-auto flex text-lg items-center justify-between">
