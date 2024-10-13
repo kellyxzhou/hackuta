@@ -1,0 +1,11 @@
+{
+  "dependencies": {
+    "react-audio-visualize": "^1.2.0",
+    "react-audio-voice-recorder": "^2.2.0",
+    "react-voice-visualizer": "^2.0.4",
+    "wavesurfer.js": "^7.8.6"
+  },
+  "devDependencies": {
+    "@types/wavesurfer.js": "^6.0.12"
+  }
+}
