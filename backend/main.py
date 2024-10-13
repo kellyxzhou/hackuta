@@ -40,11 +40,22 @@ def handle_audio_data(data):
         
         transcript = "".join(transcriptList)
 
+        longest_common_substrings = []
+        for syn_phoneme in synPhonemes:
+            max_len = len(max(''.join(syn_phoneme).replace(' ', ''), ''.join(phonemes).replace(' ', ''), key=len))
+            if (max_len > len((''.join(syn_phoneme).replace(' ', '')))-2):
+                longest_common_substrings.append(2)
+            elif (max_len > len((''.join(syn_phoneme).replace(' ', '')))-4):
+                longest_common_substrings.append(1)
+            else:
+                longest_common_substrings.append(0)
+
         resBody = {
             "phonemes": phonemes,
             "transcript": transcript,
             "transcriptList": transcriptList,
-            "synPhonemes": synPhonemes
+            "synPhonemes": synPhonemes,
+            "wordRatings": longest_common_substrings
         }
             
         emit("response", {"message": resBody})
@@ -52,6 +63,16 @@ def handle_audio_data(data):
         print(f"Error: {e}")
         emit("error", {"message": str(e)})
 
+def longest_common_substring(str1, str2):
+    m, n = len(str1), len(str2)
+    dp = [[0] * (n + 1) for _ in range(m + 1)]
+    max_len = 0
+    for i in range(1, m + 1):
+        for j in range(1, n + 1):
+            if str1[i - 1] == str2[j - 1]:
+                dp[i][j] = dp[i - 1][j - 1] + 1
+                max_len = max(max_len, dp[i][j])
+    return max_len
 
 @app.route("/")
 def hello():
