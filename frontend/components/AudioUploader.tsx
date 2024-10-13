@@ -3,6 +3,9 @@
 import { useEffect, useState } from "react";
 import io, { Socket } from "socket.io-client";
 import Recorder from "recorder-js";
+import * as React from 'react';
+import { AudioVisualizer, LiveAudioVisualizer } from 'react-audio-visualize';
+import { AudioRecorder, useAudioRecorder } from 'react-audio-voice-recorder';
 
 let socket: Socket;
 
@@ -11,6 +14,8 @@ const AudioUploader: React.FC = () => {
   const [recorder, setRecorder] = useState<Recorder | null>(null);
   const [audioContext, setAudioContext] = useState<AudioContext | null>(null);
   const [mediaStream, setMediaStream] = useState<MediaStream | null>(null);
+  const [blob, setBlob] = useState<Blob>();
+  const recorders = useAudioRecorder();
 
   useEffect(() => {
     // Initialize WebSocket connection
@@ -82,11 +87,21 @@ const AudioUploader: React.FC = () => {
   };
 
   return (
-    <div>
-      <h1>Audio Uploader</h1>
-      <button onClick={recording ? stopRecording : startRecording}>
-        {recording ? "Stop Recording" : "Start Recording"}
-      </button>
+    <div onClick={recording ? stopRecording : startRecording}>
+      <AudioRecorder
+        onRecordingComplete={setBlob}
+        recorderControls={recorders}
+
+      />
+
+      {recorders.mediaRecorder && (
+        <LiveAudioVisualizer
+          mediaRecorder={recorders.mediaRecorder}
+          width={400}
+          height={75}
+        />
+      )}
+
     </div>
   );
 };
