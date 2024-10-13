@@ -30,17 +30,20 @@ def handle_audio_data(data):
         print(f"Type of data received: {type(data)}")
         print(f"Data size: {len(data)} bytes")
         
-        with open("recieved_data.wav", "wb") as f:
+        with open("received_data.wav", "wb") as f:
             f.write(data)
 
-        readdata = librosa.read("recieved_data.wav", sr=22050)
+        readdata, _ = librosa.load("received_data.wav", sr=22050)
         phonemes = phonemeDecomp(readdata)
-        transcript = generateTranscription(readdata)
-        synPhonemes = buildSynPhonemes(transcript)
+        transcriptList = generateTranscription(readdata)
+        synPhonemes = buildSynPhonemes(transcriptList)
+        
+        transcript = "".join(transcriptList)
 
         resBody = {
             "phonemes": phonemes,
             "transcript": transcript,
+            "transcriptList": transcriptList,
             "synPhonemes": synPhonemes
         }
             
@@ -103,7 +106,7 @@ def get_audio():
 
 @app.route('/transcribe', methods=['GET'])
 def transcribe():
-    audio_file= open("received_audio.wav", "rb")
+    audio_file= open("received_data.wav", "rb")
     transcription = openai_client.audio.transcriptions.create(
         model="whisper-1", 
         file=audio_file
