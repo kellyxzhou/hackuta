@@ -23,7 +23,7 @@ openai_client = OpenAI()
 AUDIO_FOLDER = 'temp_audio'
 os.makedirs(AUDIO_FOLDER, exist_ok=True)
 
-@app.route('/composite', methods=['POST'])
+@socketio.on("audio_data")
 def handle_audio_data():
     try:
         print("Received audio data")
@@ -33,17 +33,18 @@ def handle_audio_data():
         with open("recieved_data.wav", "wb") as f:
             f.write(data)
 
-        phonemes = phonemeDecomp(data)
-        transcript = generateTranscription(data)
-        synPhonemes = buildSynPhonemes(transcript)
+        with open("recieved_data.wav", "rb") as data:
+            phonemes = phonemeDecomp(data)
+            transcript = generateTranscription(data)
+            synPhonemes = buildSynPhonemes(transcript)
 
-        resBody = {
-            "phonemes": phonemes,
-            "transcript": transcript,
-            "synPhonemes": synPhonemes
-        }
-        
-        emit("response", {"message": resBody})
+            resBody = {
+                "phonemes": phonemes,
+                "transcript": transcript,
+                "synPhonemes": synPhonemes
+            }
+            
+            emit("response", {"message": resBody})
     except Exception as e:
         print(f"Error: {e}")
         emit("error", {"message": str(e)})
