@@ -1,9 +1,8 @@
 "use client";
 import React from "react";
-import Visualizer from "../components/visualizer";
-import Navbar from "../components/navbar";
+import Navbar from "../../components/navbar";
 import { motion } from "framer-motion";
-import AudioUploader from "../../../components/AudioUploader";
+import AudioUploader from "../../components/AudioUploader";
 
 export default function page() {
     const [started, setStarted] = React.useState(false);
