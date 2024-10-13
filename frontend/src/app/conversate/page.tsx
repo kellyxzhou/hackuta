@@ -3,6 +3,7 @@ import React from "react";
 import Visualizer from "../components/visualizer";
 import Navbar from "../components/navbar";
 import { motion } from "framer-motion";
+import AudioUploader from "../../../components/AudioUploader";
 
 export default function page() {
     const [started, setStarted] = React.useState(false);
@@ -28,7 +29,7 @@ export default function page() {
                             Audio Visualizer
                         </h2>
                         <div className="flex justify-center w-full mt-5">
-                            <Visualizer />
+                            <AudioUploader />
                         </div>
                     </section>
                 </main>
