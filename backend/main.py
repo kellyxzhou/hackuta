@@ -6,6 +6,11 @@ from flask_socketio import SocketIO, emit
 import os
 import subprocess
 import audioprocess
+<<<<<<< Updated upstream
+=======
+from openai import OpenAI
+from pathlib import Path
+>>>>>>> Stashed changes
 
 load_dotenv()
 
@@ -16,6 +21,7 @@ CORS(app)
 client = MongoClient(os.getenv("MONGODB_URI"))
 
 
+
 @socketio.on('audio_data')
 def handle_audio_data(data):
     try:
@@ -24,12 +30,21 @@ def handle_audio_data(data):
         print(f"Data size: {len(data)} bytes")
 
         # Decompose and spech-to-text input audio
+<<<<<<< Updated upstream
         # with open("received_audio.wav", "wb") as f:
         #    f.write(data)
         transcription = audioprocess.generateTranscription(data)["text"]
         phenomes = audioprocess.phonemeDecomp(data)
 
         emit("response", {"message": transcription + str(phenomes)})
+=======
+        with open("received_audio.wav", "wb") as f:
+           f.write(data)
+        # transcription = audioprocess.generateTranscription(data)["text"]
+        # phenomes = audioprocess.phonemeDecomp(data)
+
+        emit("response", {"message": "Audio data received"})
+>>>>>>> Stashed changes
     except Exception as e:
         print(f"Error: {e}")
         emit("error", {"message": str(e)})
@@ -43,6 +58,57 @@ def hello():
     except Exception as e:
         return jsonify({"error": str(e)}), 500
 
+<<<<<<< Updated upstream
 
 if __name__ == '__main__':
+=======
+
+@app.route("/chat", methods=['POST'])
+def chat():
+    try:
+
+        data = request.get_json()
+        user_input = data.get('text', '')
+        if not user_input:
+            return jsonify({"error": "No input provided"}), 400
+
+        response = openai_client.chat.completions.create(
+            model="gpt-4o",
+            messages=[
+                {"role": "system", "content": "You are friendly assitant who engages users in simple, casual conversations."},
+                {
+                    "role": "user",
+                    "content": user_input
+                }
+            ]
+        )
+
+        assistant_reply = response.choices[0].message.content
+
+        speech_file_path = Path(__file__).parent / "speech.mp3"
+        response_ai = openai_client.audio.speech.create(
+            model="tts-1",
+            voice="nova",
+            input=assistant_reply
+        )
+
+        response_ai.stream_to_file(speech_file_path)
+
+        return jsonify({
+            "response": assistant_reply,
+            "audio": "http://localhost:5001/response.wav"
+        })
+
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
+
+
+@app.route('/response.mp3', methods=['GET'])
+def get_audio():
+    return app.send_static_file('response.mp3')
+
+
+if __name__ == '__main__':
+    app.static_folder = os.getcwd()
+>>>>>>> Stashed changes
     socketio.run(app, debug=True, host="0.0.0.0", port=5001)
