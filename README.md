@@ -1,4 +1,4 @@
-![Logo (3)](https://github.com/user-attachments/assets/58765acb-83a2-4647-b659-e2be85df0ef4)
+<img src="https://github.com/user-attachments/assets/58765acb-83a2-4647-b659-e2be85df0ef4" alt="Logo" width="200" />
 
 ## Inspiration
 We noticed that many non-native English speakers struggle with pronunciation, often feeling self-conscious about their ability to communicate clearly. This challenge can lead to misunderstandings and frustration in conversations, hindering their confidence and willingness to engage in English-speaking environments. Additionally, suppose you're not from the US. In that case, you often lack access to English teachers who can provide personalized feedback on your pronunciation, and traditional English tutors can be expensive, inconsistent, and not always available when needed. Fluently addresses these challenges by offering an accessible, cost-effective solution that leverages advanced technology to help users improve their pronunciation.
