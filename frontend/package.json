@@ -10,22 +10,22 @@
   },
   "dependencies": {
     "@auth0/nextjs-auth0": "^3.5.0",
+    "framer-motion": "^11.11.8",
     "next": "14.2.15",
     "react": "^18",
     "react-audio-visualize": "^1.2.0",
     "react-audio-voice-recorder": "^2.2.0",
     "react-dom": "^18",
+    "react-type-animation": "^3.2.0",
     "react-voice-visualizer": "^2.0.4",
-    "wavesurfer.js": "^7.8.6",
     "recorder-js": "^1.0.7",
-    "socket.io-client": "^4.8.0"
+    "socket.io-client": "^4.8.0",
+    "wavesurfer.js": "^7.8.6"
   },
   "devDependencies": {
     "@types/node": "20.16.11",
     "@types/react": "^18",
     "@types/react-dom": "^18",
-    "eslint": "^8",
-    "eslint-config-next": "14.2.15",
     "eslint": "^8",
     "eslint-config-next": "14.2.15",
     "postcss": "^8",
