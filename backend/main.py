@@ -1,4 +1,4 @@
-from flask import Flask, jsonify
+from flask import Flask, jsonify, request
 from flask_cors import CORS
 from dotenv import load_dotenv
 from pymongo import MongoClient
@@ -6,11 +6,10 @@ from flask_socketio import SocketIO, emit
 import os
 import subprocess
 import audioprocess
-<<<<<<< Updated upstream
-=======
 from openai import OpenAI
 from pathlib import Path
->>>>>>> Stashed changes
+from audioprocess import generateTranscription
+import librosa
 
 load_dotenv()
 
@@ -19,8 +18,10 @@ socketio = SocketIO(app, cors_allowed_origins="*")
 CORS(app)
 
 client = MongoClient(os.getenv("MONGODB_URI"))
+openai_client = OpenAI()
 
-
+AUDIO_FOLDER = 'temp_audio'
+os.makedirs(AUDIO_FOLDER, exist_ok=True)
 
 @socketio.on('audio_data')
 def handle_audio_data(data):
@@ -29,22 +30,14 @@ def handle_audio_data(data):
         print(f"Type of data received: {type(data)}")
         print(f"Data size: {len(data)} bytes")
 
-        # Decompose and spech-to-text input audio
-<<<<<<< Updated upstream
-        # with open("received_audio.wav", "wb") as f:
-        #    f.write(data)
-        transcription = audioprocess.generateTranscription(data)["text"]
-        phenomes = audioprocess.phonemeDecomp(data)
-
-        emit("response", {"message": transcription + str(phenomes)})
-=======
+        #Decompose and spech-to-text input audio
         with open("received_audio.wav", "wb") as f:
            f.write(data)
         # transcription = audioprocess.generateTranscription(data)["text"]
         # phenomes = audioprocess.phonemeDecomp(data)
 
-        emit("response", {"message": "Audio data received"})
->>>>>>> Stashed changes
+        #emit("response", {"message": transcription + str(phenomes)})
+        emit("response", {"message": "Audio received successfully"})
     except Exception as e:
         print(f"Error: {e}")
         emit("error", {"message": str(e)})
@@ -58,31 +51,26 @@ def hello():
     except Exception as e:
         return jsonify({"error": str(e)}), 500
 
-<<<<<<< Updated upstream
-
-if __name__ == '__main__':
-=======
-
 @app.route("/chat", methods=['POST'])
 def chat():
     try:
-
+        
         data = request.get_json()
         user_input = data.get('text', '')
         if not user_input:
             return jsonify({"error": "No input provided"}), 400
 
         response = openai_client.chat.completions.create(
-            model="gpt-4o",
-            messages=[
-                {"role": "system", "content": "You are friendly assitant who engages users in simple, casual conversations."},
-                {
-                    "role": "user",
-                    "content": user_input
-                }
-            ]
+        model="gpt-4o",
+        messages=[
+            {"role": "system", "content": "You are friendly assitant who engages users in simple, casual conversations."},
+            {
+                "role": "user",
+                "content": user_input
+            }
+        ]
         )
-
+        
         assistant_reply = response.choices[0].message.content
 
         speech_file_path = Path(__file__).parent / "speech.mp3"
@@ -92,7 +80,9 @@ def chat():
             input=assistant_reply
         )
 
-        response_ai.stream_to_file(speech_file_path)
+        response_ai.stream_to_file(speech_file_path)        
+        
+        
 
         return jsonify({
             "response": assistant_reply,
@@ -101,14 +91,23 @@ def chat():
 
     except Exception as e:
         return jsonify({"error": str(e)}), 500
-
-
+    
 @app.route('/response.mp3', methods=['GET'])
 def get_audio():
     return app.send_static_file('response.mp3')
 
+@app.route('/transcribe', methods=['GET'])
+def transcribe():
+    audio_file= open("received_audio.wav", "rb")
+    transcription = openai_client.audio.transcriptions.create(
+    model="whisper-1", 
+    file=audio_file
+    )
+    print(transcription.text)
+    return jsonify({"transcription": transcription.text})
+    
+        
 
 if __name__ == '__main__':
     app.static_folder = os.getcwd()
->>>>>>> Stashed changes
     socketio.run(app, debug=True, host="0.0.0.0", port=5001)
