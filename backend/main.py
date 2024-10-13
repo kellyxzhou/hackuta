@@ -23,8 +23,8 @@ openai_client = OpenAI()
 AUDIO_FOLDER = 'temp_audio'
 os.makedirs(AUDIO_FOLDER, exist_ok=True)
 
-@app.route('/composite', methods=['POST'])
-def handle_audio_data():
+@socketio.on("audio_data")
+def handle_audio_data(data):
     try:
         print("Received audio data")
         print(f"Type of data received: {type(data)}")
