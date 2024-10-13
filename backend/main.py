@@ -5,6 +5,7 @@ from pymongo import MongoClient
 from flask_socketio import SocketIO, emit
 import os
 import subprocess
+import audioprocess
 
 load_dotenv()
 
@@ -21,11 +22,13 @@ def handle_audio_data(data):
         print(f"Type of data received: {type(data)}")
         print(f"Data size: {len(data)} bytes")
 
-        # Save the received data as .wav
-        with open("received_audio.wav", "wb") as f:
-            f.write(data)
+        # Decompose and spech-to-text input audio
+        #with open("received_audio.wav", "wb") as f:
+        #    f.write(data)
+        transcription = audioprocess.generateTranscription(data)["text"]
+        phenomes = audioprocess.phonemeDecomp(data)
 
-        emit("response", {"message": "Audio received successfully"})
+        emit("response", {"message": transcription + str(phenomes)})
     except Exception as e:
         print(f"Error: {e}")
         emit("error", {"message": str(e)})
