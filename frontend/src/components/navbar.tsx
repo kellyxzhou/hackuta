@@ -8,8 +8,8 @@ const Navbar: React.FC = () => {
     const router = useRouter();
 
     return (
-        <div className="bg-white shadow-xl text-black p-4">
-            <div className="container mx-auto flex text-2xl items-center justify-between">
+        <div className="bg-white shadow-lg text-black p-4">
+            <div className="container mx-auto flex text-lg items-center justify-between">
                 <motion.div
                     whileHover={{ scale: 1.1 }}
                     whileTap={{ scale: 0.9 }}
@@ -19,11 +19,9 @@ const Navbar: React.FC = () => {
                     <img
                         src="/Logo.png"
                         alt="PronounFix"
-                        className="w-10 h-14"
+                        className="w-6 h-10"
                     />
-                    <h1 className="text-2xl text-primary font-bold">
-                        Fluently
-                    </h1>
+                    <h1 className="text-xl text-primary font-bold">Fluently</h1>
                 </motion.div>
                 <div className="flex gap-12 items-center">
                     <motion.div
