@@ -4,12 +4,23 @@ from transformers import AutoProcessor, AutoModelForCTC, Wav2Vec2Processor
 import librosa
 import torch
 from itertools import groupby
+from openai import OpenAI
+from dotenv import load_dotenv
+import os
+import pydub
+from pydub import AudioSegment
+from pydub.silence import split_on_silence
+import io
+# Get device
 
+load_dotenv()
 speechToTextModel = whisper.load_model("small")
 phonemeCheckpoint = "bookbot/wav2vec2-ljspeech-gruut"
 phonemeModel = AutoModelForCTC.from_pretrained(phonemeCheckpoint)
 processor = AutoProcessor.from_pretrained(phonemeCheckpoint)
 sr = processor.feature_extractor.sampling_rate
+OpenAI.api_key = os.environ.get("OPENAI_API_KEY")
+client = OpenAI(api_key=os.environ.get("OPENAI_API_KEY"))
 
 def decode_phonemes(
     ids: torch.Tensor, processor: Wav2Vec2Processor, ignore_stress: bool = False
@@ -47,9 +58,33 @@ def phonemeDecomp(data):
     return phonemes
 
 if __name__ == "__main__":
-    audio_array, _ = librosa.load("/data/LJ001-0009.wav", sr=22050)
+    audio_file = AudioSegment.from_wav("/data/LJ001-0008.wav")
+    print(audio_file.dBFS)
+    chunked_audio = split_on_silence(audio_file, min_silence_len=100, silence_thresh=-25)
+    print(chunked_audio)
     print("Audio File loaded")
-    phonemes = phonemeDecomp(audio_array)
-    transcription = generateTranscription(audio_array)
-    print(phonemes)
-    print(transcription)
+    phonemeList = []
+    wordList = []
+    for i, chunk in enumerate(chunked_audio):
+        buffer = io.BytesIO()
+        chunk.export(buffer, format="wav")
+        #data, sr = sf.read(buffer)
+        phonemes = phonemeDecomp(chunk.get_array_of_samples())
+        transcription = generateTranscription(chunk.get_array_of_samples())
+        phonemeList.append(phonemes)
+        wordList.append(transcription)
+    print(phonemeList)
+    print(wordList)
+    """response = client.audio.speech.create(
+        model="tts-1",
+        voice="alloy",
+        input=transcription['text']
+    )
+    response.stream_to_file("tmp.wav")
+    syn_array, _ = librosa.load("tmp.wav", sr=22050)
+    
+    genPhonemes = phonemeDecomp(syn_array)
+    print(genPhonemes)
+    """
+    #print(transcription)
+    
