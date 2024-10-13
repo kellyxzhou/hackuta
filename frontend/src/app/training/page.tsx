@@ -5,6 +5,7 @@ import { Tilt } from "react-tilt";
 import { motion } from "framer-motion";
 import { useRouter } from "next/navigation";
 import { useUser } from "@propelauth/nextjs/client";
+import Spline from "@splinetool/react-spline";
 
 const defaultOptions = {
     reverse: false, // reverse the tilt direction
