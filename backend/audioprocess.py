@@ -18,7 +18,6 @@ speechToTextModel = whisper.load_model("small")
 phonemeCheckpoint = "bookbot/wav2vec2-ljspeech-gruut"
 phonemeModel = AutoModelForCTC.from_pretrained(phonemeCheckpoint)
 processor = AutoProcessor.from_pretrained(phonemeCheckpoint)
-sr = processor.feature_extractor.sampling_rate
 OpenAI.api_key = os.environ.get("OPENAI_API_KEY")
 client = OpenAI(api_key=os.environ.get("OPENAI_API_KEY"))
 
@@ -47,7 +46,7 @@ def decode_phonemes(
 def generateTranscription(data):
     trans = speechToTextModel.transcribe(data)
     print("Generated transcription: " + str(trans["text"]), file=sys.stderr)
-    return trans
+    return [word for word in trans["text"].split(' ') if word != '']
 
 def phonemeDecomp(data):
     inputs = processor(data, return_tensors="pt", padding=True)
@@ -57,33 +56,28 @@ def phonemeDecomp(data):
     phonemes = decode_phonemes(predicted_ids[0], processor, ignore_stress=True)
     return phonemes
 
-if __name__ == "__main__":
-    audio_file = AudioSegment.from_wav("/data/LJ001-0008.wav")
-    print(audio_file.dBFS)
-    chunked_audio = split_on_silence(audio_file, min_silence_len=100, silence_thresh=-25)
-    print(chunked_audio)
-    print("Audio File loaded")
+def buildSynPhonemes(transcript, intermediatePath = "tmp.wav"):
     phonemeList = []
-    wordList = []
-    for i, chunk in enumerate(chunked_audio):
-        buffer = io.BytesIO()
-        chunk.export(buffer, format="wav")
-        #data, sr = sf.read(buffer)
-        phonemes = phonemeDecomp(chunk.get_array_of_samples())
-        transcription = generateTranscription(chunk.get_array_of_samples())
-        phonemeList.append(phonemes)
-        wordList.append(transcription)
+    for word in transcript:
+        print("Processing " + word)
+        response = client.audio.speech.create(
+            model="tts-1",
+            voice="alloy",
+            input=word
+        )
+        response.stream_to_file("tmp.wav")
+        synArray, _ = librosa.load("tmp.wav", sr=22050)
+        synPhonemes = phonemeDecomp(synArray)
+        phonemeList.append(synPhonemes)
     print(phonemeList)
-    print(wordList)
-    """response = client.audio.speech.create(
-        model="tts-1",
-        voice="alloy",
-        input=transcription['text']
-    )
-    response.stream_to_file("tmp.wav")
-    syn_array, _ = librosa.load("tmp.wav", sr=22050)
-    
-    genPhonemes = phonemeDecomp(syn_array)
-    print(genPhonemes)
-    """
-    #print(transcription)
+    return phonemeList
+
+if __name__ == "__main__":
+    data, _ = librosa.load("testdemo.wav", sr=22050)
+    phonemes = phonemeDecomp(data)
+    transcript = generateTranscription(data)
+    print(transcript)
+    synPhonemes = buildSynPhonemes(transcript)
+    print(phonemes)
+    print(transcript)
+    print(synPhonemes)

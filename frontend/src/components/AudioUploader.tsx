@@ -6,10 +6,15 @@ import Recorder from "recorder-js";
 import * as React from "react";
 import { AudioVisualizer, LiveAudioVisualizer } from "react-audio-visualize";
 import { AudioRecorder, useAudioRecorder } from "react-audio-voice-recorder";
+import axios from "axios";
 
 let socket: Socket;
 
-const AudioUploader: React.FC = () => {
+interface AudioUploaderProps {
+    sendTranscriptionData: (data: any) => void;
+}
+
+const AudioUploader: React.FC<AudioUploaderProps> = ({ sendTranscriptionData }) => {
     const [recording, setRecording] = useState<boolean>(false);
     const [recorder, setRecorder] = useState<Recorder | null>(null);
     const [audioContext, setAudioContext] = useState<AudioContext | null>(null);
@@ -27,6 +32,16 @@ const AudioUploader: React.FC = () => {
 
         socket.on("response", (data: { message: string }) => {
             console.log(data.message); // Log response from server
+            axios
+                .get("http://localhost:5001/transcribe")
+                .then((response) => {
+                    console.log(response.data); // Access the data in the response
+                    sendTranscriptionData(response.data); // Send data to parent
+                })
+                .catch((error) => {
+                    console.error("Error fetching data:", error); // Handle errors
+                });
+            
         });
 
         socket.on("error", (error: { message: string }) => {
