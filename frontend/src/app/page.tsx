@@ -11,10 +11,10 @@ const Home: React.FC = () => {
     return (
         <div className="flex flex-col min-h-screen relative overflow-hidden">
             <Navbar />
-            <div className="absolute top-20 left-0 w-full h-full bg-white bg-opacity-80">
+            <div className="absolute top-40 left-0 w-full h-full bg-white bg-opacity-70">
                 <Spline
                     scene="https://prod.spline.design/OY2hEj9n7p3Itn2n/scene.splinecode"
-                    className="absolute inset-0 -z-10 transform scale-125" // Adjust scale to make it larger
+                    className="absolute inset-0 -z-10 transform scale-125"
                 />
             </div>
             <motion.div
@@ -39,7 +39,7 @@ const Home: React.FC = () => {
                 whileHover={{ scale: 1.1 }}
                 whileTap={{ scale: 0.9 }}
                 onClick={() => router.push("/conversate")}
-                className="hover:bg-primary hover:text-white text-3xl font-bold py-2 px-4 rounded-full mt-28 mx-auto relative z-10"
+                className="border-2 bg-white bg-opacity-50 border-primary hover:bg-primary hover:text-white text-3xl font-bold py-2 px-4 rounded-full mt-28 mx-auto relative z-10"
             >
                 Get Started
             </motion.button>
