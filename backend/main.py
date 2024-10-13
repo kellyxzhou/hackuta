@@ -73,7 +73,7 @@ def chat():
         
         assistant_reply = response.choices[0].message.content
 
-        speech_file_path = Path(__file__).parent / "speech.mp3"
+        speech_file_path = Path(__file__).parent / "speech.wav"
         response_ai = openai_client.audio.speech.create(
             model="tts-1",
             voice="nova",
@@ -82,8 +82,6 @@ def chat():
 
         response_ai.stream_to_file(speech_file_path)        
         
-        
-
         return jsonify({
             "response": assistant_reply,
             "audio": "http://localhost:5001/response.wav"
