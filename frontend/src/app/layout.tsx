@@ -3,7 +3,7 @@ import localFont from "next/font/local";
 import { Jua } from "next/font/google";
 import { Poppins } from "next/font/google";
 import "./globals.css";
-import { UserProvider } from "@auth0/nextjs-auth0/client";
+import { AuthProvider } from "@propelauth/nextjs/client";
 
 const poppins = Poppins({
     subsets: ["latin"],
@@ -31,9 +31,11 @@ export default function RootLayout({
 }>) {
     return (
         <html lang="en">
-            <body className={`${poppins.className}  antialiased`}>
-                <UserProvider>{children}</UserProvider>
-            </body>
+            <AuthProvider authUrl={process.env.NEXT_PUBLIC_AUTH_URL}>
+                <body className={`${poppins.className}  antialiased`}>
+                    {children}
+                </body>
+            </AuthProvider>
         </html>
     );
 }

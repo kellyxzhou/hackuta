@@ -1,19 +1,11 @@
 "use client";
 
-import { useUser } from "@auth0/nextjs-auth0/client";
-import Link from "next/link";
 import { useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { motion } from "framer-motion";
 
 const Navbar: React.FC = () => {
     const router = useRouter();
-
-    const { user, error, isLoading } = useUser();
-
-    useEffect(() => {
-        console.log("User", user);
-    }, []);
 
     return (
         <div className="bg-white shadow-xl text-black p-4">
@@ -53,7 +45,9 @@ const Navbar: React.FC = () => {
                     <motion.div
                         whileHover={{ scale: 1.05 }}
                         whileTap={{ scale: 0.9 }}
-                        onClick={() => router.push("/")}
+                        onClick={() =>
+                            router.push("https://9241944581.propelauthtest.com")
+                        }
                         className="hover:border-primary hover:border-2 rounded-2xl py-2 font-bold px-5 hover:text-primary cursor-pointer"
                     >
                         Login
