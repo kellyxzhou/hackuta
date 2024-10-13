@@ -3,8 +3,12 @@
 import { useUser } from "@auth0/nextjs-auth0/client";
 import Link from "next/link";
 import { useEffect } from "react";
+import { useRouter } from "next/navigation";
+import { motion } from "framer-motion";
 
 const Navbar: React.FC = () => {
+    const router = useRouter();
+
     const { user, error, isLoading } = useUser();
 
     useEffect(() => {
@@ -12,23 +16,51 @@ const Navbar: React.FC = () => {
     }, []);
 
     return (
-        <nav className="bg-white shadow-md text-black p-4">
-            <div className="container mx-auto flex justify-between items-center">
-                <img src="/Logo.png" alt="PronunFix" className="w-8 h-10" />
-                <h1 className="text-xl font-bold">PronunFix</h1>
-                <div className="space-x-4">
-                    <Link href="/" className="hover:text-green-400">
-                        Home
-                    </Link>
-                    <Link href="/resources" className="hover:text-green-400">
-                        Resources
-                    </Link>
-                    <Link href="/login" className="hover:text-green-400">
+        <div className="bg-white shadow-xl text-black p-4">
+            <div className="container mx-auto flex text-2xl items-center justify-between">
+                <motion.div
+                    whileHover={{ scale: 1.1 }}
+                    whileTap={{ scale: 0.9 }}
+                    className="flex gap-2 items-center cursor-pointer"
+                    onClick={() => router.push("/")}
+                >
+                    <img
+                        src="/Logo.png"
+                        alt="PronounFix"
+                        className="w-10 h-14"
+                    />
+                    <h1 className="text-2xl text-primary font-bold">
+                        Fluently
+                    </h1>
+                </motion.div>
+                <div className="flex gap-12 items-center">
+                    <motion.div
+                        whileHover={{ scale: 1.05 }}
+                        whileTap={{ scale: 0.9 }}
+                        onClick={() => router.push("/conversate")}
+                        className="hover:border-primary hover:border-2 rounded-2xl py-2 font-bold px-5 hover:text-primary cursor-pointer"
+                    >
+                        Conversate
+                    </motion.div>
+                    <motion.div
+                        whileHover={{ scale: 1.05 }}
+                        whileTap={{ scale: 0.9 }}
+                        onClick={() => router.push("/training")}
+                        className="hover:border-primary hover:border-2 rounded-2xl py-2 font-bold px-5 hover:text-primary cursor-pointer"
+                    >
+                        Training
+                    </motion.div>
+                    <motion.div
+                        whileHover={{ scale: 1.05 }}
+                        whileTap={{ scale: 0.9 }}
+                        onClick={() => router.push("/")}
+                        className="hover:border-primary hover:border-2 rounded-2xl py-2 font-bold px-5 hover:text-primary cursor-pointer"
+                    >
                         Login
-                    </Link>
+                    </motion.div>
                 </div>
             </div>
-        </nav>
+        </div>
     );
 };
 
